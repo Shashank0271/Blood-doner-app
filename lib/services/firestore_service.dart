@@ -8,7 +8,7 @@ class FirestoreService {
   FirestoreService() {
     _userColletionreference = _firebaseFirestore.collection('Users');
   }
-  Future<void> createNewUserEntry(
+  Future<void> createNewUserEntry(//call after entering details
       {required uid, required UserModel user}) async {
     await _userColletionreference.doc(uid).set(user.toMap());
   }
@@ -23,4 +23,11 @@ class FirestoreService {
       {required String uid, required UserModel userModel}) async {
     _userColletionreference.doc(uid).update(userModel.toMap());
   }
+
+  Future<bool> isUserPresent({required String uid}) async {
+    DocumentSnapshot documentSnapshot =
+        await _userColletionreference.doc(uid).get();
+    return documentSnapshot.exists;
+  }
+  //TODO : implement function to get all users 
 }

@@ -19,7 +19,7 @@ class LoginViewModel extends BaseViewModel {
     setBusy(true);
     if (emailController.text.isEmpty || passwordController.text.isEmpty) {
       _snackbarService.showSnackbar(
-          message: 'please enter all the details', mainButtonTitle: 'main');
+          message: 'please enter all the details');
     } else {
       try {
         await _authenticationService.loginWithEmail(

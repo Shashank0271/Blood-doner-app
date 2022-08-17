@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked/stacked_annotations.dart';
 
+import '../ui/completeProfile/complete_profile_view.dart';
 import '../ui/home/home_view.dart';
 import '../ui/login/login_view.dart';
 import '../ui/signup/signup_view.dart';
@@ -18,11 +19,13 @@ import '../ui/startup/startup_view.dart';
 class Routes {
   static const String startUpView = '/';
   static const String homeView = '/home-view';
+  static const String completeProfileView = '/complete-profile-view';
   static const String signupView = '/signup-view';
   static const String loginView = '/login-view';
   static const all = <String>{
     startUpView,
     homeView,
+    completeProfileView,
     signupView,
     loginView,
   };
@@ -34,6 +37,7 @@ class StackedRouter extends RouterBase {
   final _routes = <RouteDef>[
     RouteDef(Routes.startUpView, page: StartUpView),
     RouteDef(Routes.homeView, page: HomeView),
+    RouteDef(Routes.completeProfileView, page: CompleteProfileView),
     RouteDef(Routes.signupView, page: SignupView),
     RouteDef(Routes.loginView, page: LoginView),
   ];
@@ -49,6 +53,12 @@ class StackedRouter extends RouterBase {
     HomeView: (data) {
       return MaterialPageRoute<dynamic>(
         builder: (context) => const HomeView(),
+        settings: data,
+      );
+    },
+    CompleteProfileView: (data) {
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => const CompleteProfileView(),
         settings: data,
       );
     },

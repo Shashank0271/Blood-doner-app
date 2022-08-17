@@ -1,4 +1,4 @@
-
+import 'package:blood_doner/ui/signup/signup_view.dart';
 import 'package:stacked/stacked_annotations.dart';
 import 'package:stacked_services/stacked_services.dart';
 
@@ -8,13 +8,14 @@ import '../services/firestore_service.dart';
 import '../services/image_selector.dart';
 import '../ui/home/home_view.dart';
 import '../ui/login/login_view.dart';
-import '../ui/signup/signup_view.dart';
+import '../ui/completeProfile/complete_profile_view.dart';
 import '../ui/startup/startup_view.dart';
 
 @StackedApp(
   routes: [
     MaterialRoute(page: StartUpView, initial: true),
     MaterialRoute(page: HomeView),
+    MaterialRoute(page: CompleteProfileView),
     MaterialRoute(page: SignupView),
     MaterialRoute(page: LoginView),
   ],
@@ -25,7 +26,7 @@ import '../ui/startup/startup_view.dart';
     LazySingleton(classType: DialogService),
     LazySingleton(classType: FirestoreService),
     LazySingleton(classType: ImageSelector),
-    LazySingleton(classType : CloudStorageService),
+    LazySingleton(classType: CloudStorageService),
     Singleton(classType: AuthenticationService),
   ],
   logger: StackedLogger(),

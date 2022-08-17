@@ -2,13 +2,13 @@ import 'dart:convert';
 import 'dart:io';
 
 class UserModel {
-  final String userName;
-  final String email;
-  final String bloodGroup;
-  final String age;
-  final String role;
-  final String imageUrl;
-  final String imageFileName;
+  String userName;
+   String email;
+  String bloodGroup;
+   String age;
+  String role;
+  String imageUrl;
+  String imageFileName;
   UserModel({
     required this.userName,
     required this.email,
@@ -41,7 +41,7 @@ class UserModel {
 
   Map<String, dynamic> toMap() {
     final result = <String, dynamic>{};
-  
+
     result.addAll({'userName': userName});
     result.addAll({'email': email});
     result.addAll({'bloodGroup': bloodGroup});
@@ -49,7 +49,7 @@ class UserModel {
     result.addAll({'role': role});
     result.addAll({'imageUrl': imageUrl});
     result.addAll({'imageFileName': imageFileName});
-  
+
     return result;
   }
 
@@ -78,25 +78,25 @@ class UserModel {
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-  
+
     return other is UserModel &&
-      other.userName == userName &&
-      other.email == email &&
-      other.bloodGroup == bloodGroup &&
-      other.age == age &&
-      other.role == role &&
-      other.imageUrl == imageUrl &&
-      other.imageFileName == imageFileName;
+        other.userName == userName &&
+        other.email == email &&
+        other.bloodGroup == bloodGroup &&
+        other.age == age &&
+        other.role == role &&
+        other.imageUrl == imageUrl &&
+        other.imageFileName == imageFileName;
   }
 
   @override
   int get hashCode {
     return userName.hashCode ^
-      email.hashCode ^
-      bloodGroup.hashCode ^
-      age.hashCode ^
-      role.hashCode ^
-      imageUrl.hashCode ^
-      imageFileName.hashCode;
+        email.hashCode ^
+        bloodGroup.hashCode ^
+        age.hashCode ^
+        role.hashCode ^
+        imageUrl.hashCode ^
+        imageFileName.hashCode;
   }
 }

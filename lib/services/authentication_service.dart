@@ -3,7 +3,7 @@ import 'package:blood_doner/services/firestore_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:logger/logger.dart';
-// import 'package:google_sign_in/google_sign_in.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:stacked_services/stacked_services.dart';
 import '../app/app.locator.dart';
 import '../app/app.router.dart';
@@ -25,13 +25,12 @@ class AuthenticationService {
   AuthenticationService() {
     _firebaseAuth.authStateChanges().listen((User? user) async {
       if (user == null) {
-        _user = null;
         _isuserSignedin = false;
-        _log.i("user is currently signed out !");
+        _log.v("user is currently signed out !");
       } else {
         _isuserSignedin = true;
         _firebaseUser = user;
-        _log.i("user is currently signed in !");
+        _log.v("user is currently signed in !");
         populateUser(
             userId: user.uid); //executed whenever user is authenticated
       }
@@ -39,31 +38,12 @@ class AuthenticationService {
   }
 
   Future<void> signUpWithEmail({
-    @required name,
     @required email,
     @required password,
-    @required age,
-    @required bloodGroup,
-    @required role,
-    @required imageUrl,
-    @required imageFileName,
   }) async {
-    //TODO : add check for valid email id
     try {
-      _user = UserModel(
-        userName: name,
-        email: email,
-        age: age,
-        bloodGroup: bloodGroup,
-        role: role,
-        imageFileName: imageFileName,
-        imageUrl: imageUrl,
-      );
-
       await _firebaseAuth.createUserWithEmailAndPassword(
           email: email, password: password);
-      await _firestoreService.createNewUserEntry(
-          uid: _firebaseUser!.uid, user: _user!);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         _snackbarService.showSnackbar(message: 'password is too weak');
@@ -96,29 +76,35 @@ class AuthenticationService {
     }
   }
 
-  // Future<void> signInWithGoogle() async {
-  //   final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+  Future<void> signInWithGoogle() async {
+    final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
 
-  //   final GoogleSignInAuthentication? googleAuth =
-  //       await googleUser?.authentication;
+    final GoogleSignInAuthentication? googleAuth =
+        await googleUser?.authentication;
 
-  //   final credential = GoogleAuthProvider.credential(
-  //     accessToken: googleAuth?.accessToken,
-  //     idToken: googleAuth?.idToken,
-  //   );
+    final credential = GoogleAuthProvider.credential(
+      accessToken: googleAuth?.accessToken,
+      idToken: googleAuth?.idToken,
+    );
 
-  //   UserCredential _credential =
-  //       await FirebaseAuth.instance.signInWithCredential(credential);
-  //   populateUser(
-  //       userId: _firebaseUser!.uid, userName: _credential.user!.displayName);
-  // }
+    await FirebaseAuth.instance.signInWithCredential(credential);
+  }
 
   Future<void> signOut() async {
     await _firebaseAuth.signOut();
     _navigationService.clearStackAndShow(Routes.loginView);
   }
 
-  Future<void> populateUser({@required userId}) async {
-    _user = await _firestoreService.getUser(uid: userId);
+  Future populateUser({required String userId}) async {
+    try {
+      if (await _firestoreService.isUserPresent(uid: userId)) {
+        _user = await _firestoreService.getUser(uid: userId);
+        _navigationService.clearStackAndShow(Routes.homeView) ;
+      } else {
+        _navigationService.clearStackAndShow(Routes.completeProfileView);
+      }
+    } catch (e) {
+      _log.e(e);
+    }
   }
 }

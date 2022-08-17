@@ -23,11 +23,12 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
-          primarySwatch: Colors.amber,
-          textTheme: TextTheme(
-            bodyText1: GoogleFonts.karla(),
-            headlineLarge: GoogleFonts.bebasNeue(),
-          )),
+        primarySwatch: Colors.amber,
+        textTheme: TextTheme(
+          bodyText1: GoogleFonts.karla(),
+          headlineLarge: GoogleFonts.bebasNeue(),
+        ),
+      ),
       navigatorKey: StackedService.navigatorKey,
       onGenerateRoute: StackedRouter().onGenerateRoute,
     );

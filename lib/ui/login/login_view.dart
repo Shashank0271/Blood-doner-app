@@ -1,3 +1,4 @@
+import 'package:blood_doner/widgets/smart/google_signin/google_signin_button.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import '../shared/ui_helper.dart';
@@ -12,7 +13,7 @@ class LoginView extends StatelessWidget {
       builder: (context, model, child) => Scaffold(
           resizeToAvoidBottomInset: false,
           body: Padding(
-            padding: const EdgeInsets.only(left: 40, top: 55, right: 24),
+            padding: const EdgeInsets.only(left: 40, top: 23, right: 24),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
@@ -26,13 +27,14 @@ class LoginView extends StatelessWidget {
                         ),
                   ),
                 ),
-                verticalSpaceLarge,
+                verticalSpaceMedium,
                 TextField(
                   keyboardType: TextInputType.emailAddress,
                   controller: model.emailController,
                   decoration: const InputDecoration(
-                    hintText: 'Your email',
-                  ),
+                      hintText: 'Your email',
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(20)))),
                 ),
                 verticalSpaceSmall,
                 TextField(
@@ -40,10 +42,11 @@ class LoginView extends StatelessWidget {
                   obscureText: true,
                   controller: model.passwordController,
                   decoration: const InputDecoration(
-                    hintText: 'Password',
-                  ),
+                      hintText: 'Password',
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(20)))),
                 ),
-                verticalSpaceLarge,
+                verticalSpaceMedium,
                 GestureDetector(
                   onTap: model.loginViaEmail,
                   child: Container(
@@ -75,7 +78,14 @@ class LoginView extends StatelessWidget {
                               )),
                   ),
                 ),
-                verticalSpaceMedium,
+                verticalSpaceTiny,
+                Text(
+                  'or',
+                  style: TextStyle(color: Colors.grey.shade700),
+                ),
+                verticalSpaceTiny,
+                const GoogleSigninButtonWidget(),
+                verticalSpaceTiny,
                 Row(
                   children: [
                     horizontalSpaceLarge,
