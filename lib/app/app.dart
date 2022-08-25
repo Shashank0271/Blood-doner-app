@@ -1,7 +1,9 @@
+import 'package:blood_doner/ui/EditProfile/edit_profile_view.dart';
+import 'package:blood_doner/ui/Page/page_view.dart';
+import 'package:blood_doner/ui/home/home_viewmodel.dart';
 import 'package:blood_doner/ui/signup/signup_view.dart';
 import 'package:stacked/stacked_annotations.dart';
 import 'package:stacked_services/stacked_services.dart';
-
 import '../services/authentication_service.dart';
 import '../services/cloud_storage_service.dart';
 import '../services/firestore_service.dart';
@@ -18,6 +20,7 @@ import '../ui/startup/startup_view.dart';
     MaterialRoute(page: CompleteProfileView),
     MaterialRoute(page: SignupView),
     MaterialRoute(page: LoginView),
+    MaterialRoute(page: EditProfileView),
   ],
   dependencies: [
     LazySingleton(classType: NavigationService),
@@ -28,6 +31,7 @@ import '../ui/startup/startup_view.dart';
     LazySingleton(classType: ImageSelector),
     LazySingleton(classType: CloudStorageService),
     Singleton(classType: AuthenticationService),
+    LazySingleton(classType: HomeViewModel),
   ],
   logger: StackedLogger(),
 )
