@@ -5,12 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:stacked/stacked.dart';
 
-class PageView extends StatelessWidget {
-  const PageView({Key? key}) : super(key: key);
+class MyPageView extends StatelessWidget {
+  const MyPageView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return ViewModelBuilder<PageViewModel>.reactive(
+    return ViewModelBuilder<MyPageViewModel>.reactive(
       builder: (context, model, child) => Scaffold(
         body: getViewForIndex(model.currentIndex),
         bottomNavigationBar: BottomNavigationBar(
@@ -25,18 +25,18 @@ class PageView extends StatelessWidget {
                   icon: Icon(FontAwesomeIcons.edit), label: 'Profile'),
             ]),
       ),
-      viewModelBuilder: () => PageViewModel(),
+      viewModelBuilder: () => MyPageViewModel(),
     );
   }
 
   Widget getViewForIndex(int currentIndex) {
     switch (currentIndex) {
       case 0:
-        return HomeView();
+        return const HomeView();
       case 1:
         return EditProfileView();
       default:
-        return HomeView();
+        return const HomeView();
     }
   }
 }

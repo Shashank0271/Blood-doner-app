@@ -86,7 +86,7 @@ class AuthenticationService {
       accessToken: googleAuth?.accessToken,
       idToken: googleAuth?.idToken,
     );
-    
+
     await FirebaseAuth.instance.signInWithCredential(credential);
   }
 
@@ -99,8 +99,7 @@ class AuthenticationService {
     try {
       if (await _firestoreService.isUserPresent(uid: userId)) {
         _user = await _firestoreService.getUser(uid: userId);
-        // _navigationService.clearStackAndShow(Routes.homeView);
-        // _navigationService.clearStackAndShow(Routes.page)
+        _navigationService.clearStackAndShow(Routes.myPageView);
       } else {
         _navigationService.clearStackAndShow(Routes.completeProfileView);
       }

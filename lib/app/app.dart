@@ -21,6 +21,7 @@ import '../ui/startup/startup_view.dart';
     MaterialRoute(page: SignupView),
     MaterialRoute(page: LoginView),
     MaterialRoute(page: EditProfileView),
+    MaterialRoute(page: MyPageView)
   ],
   dependencies: [
     LazySingleton(classType: NavigationService),
