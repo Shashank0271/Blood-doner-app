@@ -22,7 +22,7 @@ class MyPageView extends StatelessWidget {
                 label: 'Search',
               ),
               BottomNavigationBarItem(
-                  icon: Icon(FontAwesomeIcons.edit), label: 'Profile'),
+                  icon: Icon(Icons.person), label: 'Profile'),
             ]),
       ),
       viewModelBuilder: () => MyPageViewModel(),
