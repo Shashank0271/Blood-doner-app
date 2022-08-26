@@ -1,7 +1,8 @@
+import 'dart:io';
+
 import 'package:blood_doner/ui/shared/ui_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
-import 'package:uiblock/default_uiblock_loader.dart';
 import 'package:uiblock/uiblock.dart';
 import 'edit_profile_viewmodel.dart';
 
@@ -38,27 +39,35 @@ class EditProfileView extends StatelessWidget {
                           child: CircleAvatar(
                               backgroundColor: Colors.grey.shade200,
                               radius: 50,
-                              child: Image(
-                                  image: NetworkImage(model.getUserImageUrl))),
+                              child: model.pickedImage == null
+                                  ? Image(
+                                      image:
+                                          NetworkImage(model.getUserImageUrl))
+                                  : Image(
+                                      image: FileImage(
+                                          File(model.pickedImage!.path)))),
                         ),
                         Positioned(
                             bottom: 0,
                             right: 0,
-                            child: Container(
-                              height: 40,
-                              width: 40,
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                border: Border.all(
-                                  width: 2.5,
-                                  color:
-                                      Theme.of(context).scaffoldBackgroundColor,
+                            child: GestureDetector(
+                              onTap: model.selectImage,
+                              child: Container(
+                                height: 40,
+                                width: 40,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  border: Border.all(
+                                    width: 2.5,
+                                    color:
+                                        Theme.of(context).scaffoldBackgroundColor,
+                                  ),
+                                  color: Colors.deepOrange.shade300,
                                 ),
-                                color: Colors.deepOrange.shade300,
-                              ),
-                              child: const Icon(
-                                Icons.edit,
-                                color: Colors.white,
+                                child: const Icon(
+                                  Icons.edit,
+                                  color: Colors.white,
+                                ),
                               ),
                             )),
                       ],
@@ -102,7 +111,7 @@ class EditProfileView extends StatelessWidget {
                       onPressed: () {
                         UIBlock.block(context);
                         model.updateUserProfile(newuserName: name, newAge: age);
-                        if(!model.isBusy) {
+                        if (!model.isBusy) {
                           UIBlock.unblock(context);
                         }
                       },
