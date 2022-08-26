@@ -3,6 +3,7 @@ import 'package:stacked/stacked.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import '../../app/app.locator.dart';
 import 'home_viewmodel.dart';
+import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
 
 class HomeView extends StatelessWidget {
   const HomeView({Key? key}) : super(key: key);
@@ -10,7 +11,8 @@ class HomeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<HomeViewModel>.reactive(
-      disposeViewModel: false,//so that we reuse the same viewmodel to maintain the state
+      disposeViewModel:
+          false, //so that we reuse the same viewmodel to maintain the state
       initialiseSpecialViewModelsOnce: true,
       builder: (context, model, child) => Scaffold(
         floatingActionButton: SpeedDial(
@@ -60,28 +62,32 @@ class HomeView extends StatelessWidget {
                     title: const Text('Blood Bank'),
                   )
                 ],
-                body: Padding(
-                  padding:
-                      const EdgeInsets.only(left: 8.0, right: 8.0, bottom: 8.0),
-                  child: ListView.builder(
-                    itemCount: model.displayList.length,
-                    itemBuilder: (context, index) => Card(
-                      child: ListTile(
-                        leading: CircleAvatar(
-                          backgroundColor: Colors.transparent,
-                          backgroundImage: NetworkImage(
-                            model.displayList[index]['imageUrl'],
+                body: LiquidPullToRefresh(
+                  onRefresh: model.futureToRun,
+                  showChildOpacityTransition: false,
+                  child: Padding(
+                    padding: const EdgeInsets.only(
+                        left: 8.0, right: 8.0, bottom: 8.0),
+                    child: ListView.builder(
+                      itemCount: model.displayList.length,
+                      itemBuilder: (context, index) => Card(
+                        child: ListTile(
+                          leading: CircleAvatar(
+                            backgroundColor: Colors.transparent,
+                            backgroundImage: NetworkImage(
+                              model.displayList[index]['imageUrl'],
+                            ),
                           ),
-                        ),
-                        title: Text(
-                          '${model.displayList[index]['userName']} (${model.displayList[index]['role']})',
-                          style: const TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                        subtitle: Text(
-                            'Blood group : ${model.displayList[index]['bloodGroup']}'),
-                        trailing: IconButton(
-                          onPressed: () {},
-                          icon: const Icon(Icons.email),
+                          title: Text(
+                            '${model.displayList[index]['userName']} (${model.displayList[index]['role']})',
+                            style: const TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                          subtitle: Text(
+                              'Blood group : ${model.displayList[index]['bloodGroup']}'),
+                          trailing: IconButton(
+                            onPressed: () {},
+                            icon: const Icon(Icons.email),
+                          ),
                         ),
                       ),
                     ),

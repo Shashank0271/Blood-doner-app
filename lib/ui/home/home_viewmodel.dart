@@ -28,5 +28,6 @@ class HomeViewModel extends FutureViewModel {
     userList = await _firestoreService.fetchAllUsers();
     displayList = [...userList];
     _log.i(userList);
+    notifyListeners();
   }
 }
