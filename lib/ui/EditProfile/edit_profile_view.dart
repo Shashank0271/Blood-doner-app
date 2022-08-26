@@ -59,8 +59,8 @@ class EditProfileView extends StatelessWidget {
                                   shape: BoxShape.circle,
                                   border: Border.all(
                                     width: 2.5,
-                                    color:
-                                        Theme.of(context).scaffoldBackgroundColor,
+                                    color: Theme.of(context)
+                                        .scaffoldBackgroundColor,
                                   ),
                                   color: Colors.deepOrange.shade300,
                                 ),
@@ -124,9 +124,10 @@ class EditProfileView extends StatelessWidget {
                       child: const Text(
                         "SAVE",
                         style: TextStyle(
-                            fontSize: 14,
-                            letterSpacing: 2.2,
-                            color: Colors.black),
+                          fontSize: 14,
+                          letterSpacing: 2.2,
+                          color: Colors.black,
+                        ),
                       ),
                     )
                   ],

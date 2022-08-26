@@ -1,9 +1,12 @@
+import 'package:blood_doner/ui/ViewProfile/viewprofile_view.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:stacked/stacked.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import '../../app/app.locator.dart';
 import 'home_viewmodel.dart';
 import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
+import 'package:animations/animations.dart';
 
 class HomeView extends StatelessWidget {
   const HomeView({Key? key}) : super(key: key);
@@ -68,28 +71,42 @@ class HomeView extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.only(
                         left: 8.0, right: 8.0, bottom: 8.0),
-                    child: ListView.builder(
+                    child: ListView.separated(
                       itemCount: model.displayList.length,
-                      itemBuilder: (context, index) => Card(
-                        child: ListTile(
-                          leading: CircleAvatar(
-                            backgroundColor: Colors.transparent,
-                            backgroundImage: NetworkImage(
-                              model.displayList[index]['imageUrl'],
+                      itemBuilder: (context, index) => OpenContainer(
+                        transitionDuration: const Duration(seconds: 1),
+                        openBuilder: (context, action) => ViewProfileView(
+                            Map<String, String>.from(model.displayList[index])),
+                        closedBuilder: (context, VoidCallback openContainer) =>
+                            Card(
+                          child: ListTile(
+                            onTap: openContainer,
+                            leading: CircleAvatar(
+                              backgroundColor: Colors.transparent,
+                              backgroundImage: NetworkImage(
+                                model.displayList[index]['imageUrl'],
+                              ),
                             ),
-                          ),
-                          title: Text(
-                            '${model.displayList[index]['userName']} (${model.displayList[index]['role']})',
-                            style: const TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                          subtitle: Text(
-                              'Blood group : ${model.displayList[index]['bloodGroup']}'),
-                          trailing: IconButton(
-                            onPressed: () {},
-                            icon: const Icon(Icons.email),
+                            title: Text(
+                              '${model.displayList[index]['userName']} (${model.displayList[index]['role']})',
+                              style:
+                                  const TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                            subtitle: Text(
+                                'Blood group : ${model.displayList[index]['bloodGroup']}'),
+                            trailing: IconButton(
+                              onPressed: () {
+                                model.sendEmailToUser(
+                                    toEmail: model.displayList[index]['email']);
+                              },
+                              icon: const Icon(Icons.email),
+                            ),
                           ),
                         ),
                       ),
+                      separatorBuilder: (BuildContext context, int index) {
+                        return const SizedBox(height: 10);
+                      },
                     ),
                   ),
                 ),

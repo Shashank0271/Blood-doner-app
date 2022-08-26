@@ -6,12 +6,14 @@
 
 // ignore_for_file: public_member_api_docs
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked/stacked_annotations.dart';
 
 import '../ui/EditProfile/edit_profile_view.dart';
 import '../ui/Page/page_view.dart';
+import '../ui/ViewProfile/viewprofile_view.dart';
 import '../ui/completeProfile/complete_profile_view.dart';
 import '../ui/home/home_view.dart';
 import '../ui/login/login_view.dart';
@@ -26,6 +28,7 @@ class Routes {
   static const String loginView = '/login-view';
   static const String editProfileView = '/edit-profile-view';
   static const String myPageView = '/my-page-view';
+  static const String viewProfileView = '/view-profile-view';
   static const all = <String>{
     startUpView,
     homeView,
@@ -34,6 +37,7 @@ class Routes {
     loginView,
     editProfileView,
     myPageView,
+    viewProfileView,
   };
 }
 
@@ -48,6 +52,7 @@ class StackedRouter extends RouterBase {
     RouteDef(Routes.loginView, page: LoginView),
     RouteDef(Routes.editProfileView, page: EditProfileView),
     RouteDef(Routes.myPageView, page: MyPageView),
+    RouteDef(Routes.viewProfileView, page: ViewProfileView),
   ];
   @override
   Map<Type, StackedRouteFactory> get pagesMap => _pagesMap;
@@ -84,7 +89,7 @@ class StackedRouter extends RouterBase {
     },
     EditProfileView: (data) {
       return MaterialPageRoute<dynamic>(
-        builder: (context) => EditProfileView(),
+        builder: (context) => const EditProfileView(),
         settings: data,
       );
     },
@@ -94,5 +99,26 @@ class StackedRouter extends RouterBase {
         settings: data,
       );
     },
+    ViewProfileView: (data) {
+      var args = data.getArgs<ViewProfileViewArguments>(nullOk: false);
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => ViewProfileView(
+          args.userMap,
+          key: args.key,
+        ),
+        settings: data,
+      );
+    },
   };
+}
+
+/// ************************************************************************
+/// Arguments holder classes
+/// *************************************************************************
+
+/// ViewProfileView arguments holder class
+class ViewProfileViewArguments {
+  final Map<String, String> userMap;
+  final Key? key;
+  ViewProfileViewArguments({required this.userMap, this.key});
 }

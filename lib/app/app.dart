@@ -1,5 +1,6 @@
 import 'package:blood_doner/ui/EditProfile/edit_profile_view.dart';
 import 'package:blood_doner/ui/Page/page_view.dart';
+import 'package:blood_doner/ui/ViewProfile/viewprofile_view.dart';
 import 'package:blood_doner/ui/home/home_viewmodel.dart';
 import 'package:blood_doner/ui/signup/signup_view.dart';
 import 'package:stacked/stacked_annotations.dart';
@@ -21,7 +22,8 @@ import '../ui/startup/startup_view.dart';
     MaterialRoute(page: SignupView),
     MaterialRoute(page: LoginView),
     MaterialRoute(page: EditProfileView),
-    MaterialRoute(page: MyPageView)
+    MaterialRoute(page: MyPageView),
+    MaterialRoute(page: ViewProfileView)
   ],
   dependencies: [
     LazySingleton(classType: NavigationService),

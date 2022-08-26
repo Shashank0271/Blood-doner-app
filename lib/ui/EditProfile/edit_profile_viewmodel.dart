@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:blood_doner/services/authentication_service.dart';
 import 'package:blood_doner/services/cloud_storage_service.dart';
 import 'package:blood_doner/services/firestore_service.dart';
@@ -8,7 +7,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
-
 import '../../app/app.locator.dart';
 
 class EditProfileViewModel extends BaseViewModel {
@@ -75,5 +73,6 @@ class EditProfileViewModel extends BaseViewModel {
     await _authenticationService.populateUser(
         userId: _authenticationService.firebaseUser!.uid);
     setBusy(false);
+    _snackbarService.showSnackbar(message: 'Profile updated successfully');
   }
 }
